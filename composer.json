@@ -1,0 +1,91 @@
+{
+  "name": "laravel/laravel",
+  "description": "The Laravel Framework.",
+  "keywords": ["framework", "laravel"],
+  "license": "MIT",
+  "type": "project",
+  "require": {
+    "php": ">=7.1",
+    "laravel/framework": "5.4.*",
+    "guzzlehttp/guzzle": "6.*",
+    "sigma/backbone": "^3.0",
+    "sigma/open_access": "^0.3",
+    "pda/pheanstalk": "3.*",
+    "maatwebsite/excel": "~2.1.0",
+    "doctrine/dbal": "2.5.5",
+    "barryvdh/laravel-snappy": "^0.3.1",
+    "intercom/intercom-php": "2.*",
+    "predis/predis": "1.1.*@dev",
+    "laravelcollective/html": "5.4.*",
+    "league/flysystem-aws-s3-v3": "~1.0",
+    "aws/aws-sdk-php": "~3.0",
+    "intervention/image": "^2.3",
+    "nikaia/translation-sheet": "1.*",
+    "prettus/l5-repository": "^2.6",
+    "sebdesign/laravel-state-machine": "^1.1",
+    "spatie/browsershot": "^1.6",
+    "spatie/laravel-permission": "^1.12",
+    "sofa/revisionable": "^5.4",
+    "laravel/browser-kit-testing": "^1.0",
+    "yajra/laravel-datatables-oracle": "^7.2",
+    "league/fractal": "^0.16.0",
+    "laravel/dusk": "^1.1",
+    "sigma/settings": "^0.9",
+    "stevenmaguire/laravel-middleware-csp": "^0.1.1",
+    "sigma/statistics": "^1.1",
+    "sigma/synchronizations": "1.1.*",
+    "sigma/adyen": "dev-release/1.0",
+    "sigma/faq": "1.0.*"
+  },
+  "require-dev": {
+    "fzaninotto/faker": "~1.4",
+    "mockery/mockery": "0.9.*",
+    "phpunit/phpunit": "5.7.*",
+    "symfony/css-selector": "3.1.*",
+    "symfony/dom-crawler": "3.1.*",
+    "squizlabs/php_codesniffer": "2.*",
+    "phpmd/phpmd": "@stable",
+    "sebastian/phpcpd": "*",
+    "laravel/envoy": "~1.0",
+    "barryvdh/laravel-debugbar": "^2.2",
+    "barryvdh/laravel-ide-helper": "^2.2",
+    "cornford/backup": "2.*"
+  },
+  "autoload": {
+    "classmap": [
+      "database"
+    ],
+    "psr-4": {
+      "App\\": "app/"
+    }
+  },
+  "autoload-dev": {
+    "classmap": [
+      "tests/"
+    ]
+  },
+  "scripts": {
+    "post-root-package-install": [
+      "php -r \"copy('.env.example', '.env');\""
+    ],
+    "post-create-project-cmd": [
+      "php artisan key:generate"
+    ],
+    "post-install-cmd": [
+      "php artisan clear-compiled",
+      "php artisan optimize",
+      "rm -f public/storage",
+      "ln -s ../storage/app/public public/storage"
+    ],
+    "post-update-cmd": [
+      "php artisan clear-compiled",
+      "php artisan optimize",
+      "rm -f public/storage",
+      "ln -s ../storage/app/public public/storage"
+    ]
+  },
+  "config": {
+    "preferred-install": "dist",
+    "secure-http": false
+  }
+}
