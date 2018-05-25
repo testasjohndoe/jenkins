@@ -7,7 +7,7 @@
     <property name="toolsdir" value="${basedir}/vendor/bin/"/>
     <property name="composer" value="${basedir}/build/composer.phar"/>
     <property name="artisan" value="${basedir}/artisan"/>
-    <property name="make php-fpm php" value="php"/>
+    <property name="php" value="make php-fpm php"/>
 
     <target name="build"
             depends="docker,composer,prepare,phpmd-ci,phpcs-ci,phpcpd-ci,clear-db,migrate,seed,npm,webpack"
