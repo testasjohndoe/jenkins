@@ -197,7 +197,9 @@
     </target>
 
     <target name="docker" description="Starts docker containers">
-        <exec executable="make start" />
+        <exec executable="make">
+            <arg value="start" />
+        </exec>
     </target>
 
     <target name="clear-db" depends="docker,composer" description="Run composer update">
