@@ -7,7 +7,6 @@
     <property name="toolsdir" value="${basedir}/vendor/bin/"/>
     <property name="composer" value="${basedir}/build/composer.phar"/>
     <property name="artisan" value="${basedir}/artisan"/>
-    <property name="php" value="make php-fpm php"/>
 
     <target name="build"
             depends="docker,composer,prepare,phpmd-ci,phpcs-ci,phpcpd-ci,clear-db,migrate,seed,npm,webpack"
@@ -47,7 +46,8 @@
     </target>
 
     <target name="lint" description="Perform syntax check of sourcecode files">
-        <apply executable="php" failonerror="true">
+        <apply executable="make" failonerror="true">
+            <arg value="php"/>
             <arg value="-l"/>
 
             <fileset dir="${basedir}/app">
@@ -59,7 +59,9 @@
 
     <target name="phpmd"
             description="Perform project mess detection using PHPMD and print human readable output. Intended for usage on the command line before committing.">
-        <exec executable="make php-fpm ${toolsdir}phpmd" resultproperty="phpmd.result">
+        <exec executable="make" resultproperty="phpmd.result">
+            <arg value="php-fpm"/>
+            <arg value="${toolsdir}phpmd"/>
             <arg path="${basedir}/app"/>
             <arg value="text"/>
             <arg value="codesize,unusedcoderules.xml"/>
@@ -69,7 +71,9 @@
     <target name="phpmd-ci"
             depends="docker,prepare"
             description="Perform project mess detection using PHPMD and log result in XML format. Intended for usage within a continuous integration environment.">
-        <exec executable="make php-fpm ${toolsdir}phpmd">
+        <exec executable="make">
+            <arg value="php-fpm"/>
+            <arg value="${toolsdir}phpmd"/>
             <arg path="${basedir}/app"/>
             <arg value="xml"/>
             <arg value="codesize,unusedcoderules.xml"/>
@@ -80,7 +84,9 @@
 
     <target name="phpcs"
             description="Find coding standard violations using PHP_CodeSniffer and print human readable output. Intended for usage on the command line before committing.">
-        <exec executable="make php-fpm ${toolsdir}phpcs" resultproperty="phpcs.result">
+        <exec executable="make" resultproperty="phpcs.result">
+            <arg value="php-fpm"/>
+            <arg value="${toolsdir}phpcs"/>
             <arg value="--standard=PSR2"/>
             <arg value="--extensions=php"/>
             <arg value="--ignore='*/database/*, */migrations/*, */views/*, autoload.php'"/>
@@ -92,7 +98,9 @@
     <target name="phpcs-ci"
             depends="docker,prepare"
             description="Find coding standard violations using PHP_CodeSniffer and log result in XML format. Intended for usage within a continuous integration environment.">
-        <exec executable="make php-fpm ${toolsdir}phpcs" output="/dev/null">
+        <exec executable="make" output="/dev/null">
+            <arg value="php-fpm"/>
+            <arg value="${toolsdir}phpcs"/>
             <arg value="--report=checkstyle"/>
             <arg value="--report-file=${basedir}/build/logs/checkstyle.xml"/>
             <arg value="--standard=PSR2"/>
@@ -104,7 +112,9 @@
 
     <target name="phpcpd"
             description="Find duplicate code using PHPCPD and print human readable output. Intended for usage on the command line before committing.">
-        <exec executable="make php-fpm ${toolsdir}phpcpd" resultproperty="phpcpd.result">
+        <exec executable="make" resultproperty="phpcpd.result">
+            <arg value="php-fpm"/>
+            <arg value="${toolsdir}phpcpd"/>
             <arg path="${basedir}/app"/>
         </exec>
     </target>
@@ -112,7 +122,9 @@
     <target name="phpcpd-ci"
             depends="docker,prepare"
             description="Find duplicate code using PHPCPD and log result in XML format. Intended for usage within a continuous integration environment.">
-        <exec executable="make php-fpm ${toolsdir}phpcpd">
+        <exec executable="make">
+            <arg value="php-fpm"/>
+            <arg value="${toolsdir}phpcpd"/>
             <arg value="--log-pmd"/>
             <arg path="${basedir}/build/logs/pmd-cpd.xml"/>
             <arg path="${basedir}/app"/>
@@ -124,7 +136,7 @@
             depends="docker,prepare"
             description="Run migrations">
         <exec executable="php" resultproperty="result.migrate" taskname="migrate">
-            <arg value="artisan" />
+            <arg value="${artisan}" />
             <arg value="migrate:refresh" />
             <arg value="--force" />
         </exec>
@@ -136,8 +148,9 @@
             unless="seed.done"
             depends="docker,prepare"
             description="Run migrations">
-        <exec executable="php" resultproperty="result.seed" taskname="seed">
-            <arg value="artisan" />
+        <exec executable="make" resultproperty="result.seed" taskname="seed">
+            <arg value="php" />
+            <arg value="${artisan}" />
             <arg value="db:seed" />
             <arg value="--force" />
         </exec>
@@ -149,7 +162,9 @@
             unless="npm.done"
             depends="docker,prepare,migrate,seed"
             description="Download npm packages">
-        <exec executable="make yarn yarn" resultproperty="result.npm" taskname="npm">
+        <exec executable="make" resultproperty="result.npm" taskname="npm">
+            <arg value="yarn"/>
+            <arg value="yarn"/>
             <arg value="install"/>
         </exec>
 
@@ -160,7 +175,9 @@
             unless="webpack.done"
             depends="docker,npm"
             description="Build frontend">
-        <exec executable="make yarn yarn" resultproperty="result.webpack" taskname="webpack">
+        <exec executable="make" resultproperty="result.webpack" taskname="webpack">
+            <arg value="yarn"/>
+            <arg value="yarn"/>
             <arg value="run"/>
             <arg value="dev"/>
         </exec>
@@ -178,7 +195,8 @@
     </target>
 
     <target name="composer-selfupdate" depends="docker,composer-download" unless="composer.noselfupdate">
-        <exec executable="${php}">
+        <exec executable="make">
+            <arg value="php-fpm"/>
             <arg value="${composer}"/>
             <arg value="self-update"/>
             <arg value="--quiet"/>
@@ -186,12 +204,14 @@
     </target>
 
     <target name="composer" depends="docker,composer-selfupdate" description="Run composer update">
-        <exec executable="${php}" resultproperty="composer.result">
+        <exec executable="make" resultproperty="composer.result">
+            <arg value="php-fpm"/>
             <arg value="${composer}"/>
             <arg value="install"/>
         </exec>
-        <exec executable="php">
-            <arg value="artisan" />
+        <exec executable="make">
+            <arg value="php" />
+            <arg value="${artisan}" />
             <arg value="key:generate" />
         </exec>
     </target>
@@ -203,7 +223,8 @@
     </target>
 
     <target name="clear-db" depends="docker,composer" description="Run composer update">
-        <exec executable="${php}" resultproperty="composer.result">
+        <exec executable="make" resultproperty="composer.result">
+            <arg value="php"/>
             <arg value="${artisan}"/>
             <arg value="db:truncate"/>
         </exec>

@@ -19,6 +19,9 @@ ssh-key:
 php-fpm:
 	@docker-compose exec php-fpm $$cmd
 
+php:
+	@docker-compose exec php-fpm php $$cmd
+
 yarn:
 	@docker-compose exec yarn $$cmd
 
