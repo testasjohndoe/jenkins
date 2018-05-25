@@ -135,7 +135,8 @@
             unless="migrate.done"
             depends="docker,prepare"
             description="Run migrations">
-        <exec executable="php" resultproperty="result.migrate" taskname="migrate">
+        <exec executable="make" resultproperty="result.migrate" taskname="migrate">
+            <arg value="php" />
             <arg value="${artisan}" />
             <arg value="migrate:refresh" />
             <arg value="--force" />
