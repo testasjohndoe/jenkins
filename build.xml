@@ -14,9 +14,8 @@
     </target>
 
     <target name="docker" description="Starts docker containers">
-        <exec executable="docker-compose">
-            <arg value="up" />
-            <arg value="-d" />
+        <exec executable="make">
+            <arg value="start" />
         </exec>
     </target>
 </project>
