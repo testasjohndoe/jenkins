@@ -198,6 +198,7 @@
     <target name="composer-selfupdate" depends="docker,composer-download" unless="composer.noselfupdate">
         <exec executable="docker-compose">
             <arg value="exec"/>
+            <arg value="-T"/>
             <arg value="php-fpm"/>
             <arg value="php"/>
             <arg value="--version"/>
