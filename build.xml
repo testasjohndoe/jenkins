@@ -193,6 +193,10 @@
     <target name="composer-download" depends="docker,composer-check" unless="composer.present">
         <property name="composer.noselfupdate" value="true"/>
         <get src="https://getcomposer.org/composer.phar" dest="${composer}"/>
+        <exec executable="ls">
+            <arg value="-lah"/>
+            <arg value="${basedir}/build"/>
+        </exec>
     </target>
 
     <target name="composer-selfupdate" depends="docker,composer-download" unless="composer.noselfupdate">
