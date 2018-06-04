@@ -197,8 +197,7 @@
 
     <target name="composer-selfupdate" depends="docker,composer-download" unless="composer.noselfupdate">
         <exec executable="make">
-            <arg value="php-fpm"/>
-            <arg value="${composer} self-update --quiet"/>
+            <arg value="php-fpm ${composer} self-update --quiet"/>
         </exec>
     </target>
 
