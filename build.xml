@@ -198,6 +198,10 @@
             <arg value="${composer}" />
             <arg value="https://getcomposer.org/composer.phar" />
         </exec>
+        <exec executable="chmod">
+            <arg value="777" />
+            <arg value="${composer}" />
+        </exec>
         <property name="composer.noselfupdate" value="true"/>
     </target>
 
