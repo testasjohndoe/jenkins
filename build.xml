@@ -5,7 +5,7 @@
 
     <!-- Uncomment the following when the tools are in ${basedir}/vendor/bin -->
     <property name="toolsdir" value="${basedir}/vendor/bin/"/>
-    <property name="composer" value="${basedir}/composer.phar"/>
+    <property name="composer" value="composer.phar"/>
     <property name="artisan" value="${basedir}/artisan"/>
     <property name="php" value="php"/>
 
