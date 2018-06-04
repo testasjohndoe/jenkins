@@ -208,10 +208,13 @@
         <exec executable="docker-compose" resultproperty="composer.result">
             <arg value="exec"/>
             <arg value="php-fpm"/>
-            <arg value="${composer}"/>
+            <arg value="php"/>
+            <arg value="${basedir}/build/composer.phar"/>
             <arg value="install"/>
         </exec>
-        <exec executable="make">
+        <exec executable="docker-compose">
+            <arg value="exec"/>
+            <arg value="php-fpm"/>
             <arg value="php" />
             <arg value="${artisan}" />
             <arg value="key:generate" />
