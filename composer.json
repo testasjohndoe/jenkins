@@ -8,8 +8,6 @@
     "php": ">=7.1",
     "laravel/framework": "5.4.*",
     "guzzlehttp/guzzle": "6.*",
-    "sigma/backbone": "^3.0",
-    "sigma/open_access": "^0.3",
     "pda/pheanstalk": "3.*",
     "maatwebsite/excel": "~2.1.0",
     "doctrine/dbal": "2.5.5",
@@ -30,12 +28,7 @@
     "yajra/laravel-datatables-oracle": "^7.2",
     "league/fractal": "^0.16.0",
     "laravel/dusk": "^1.1",
-    "sigma/settings": "^0.9",
-    "stevenmaguire/laravel-middleware-csp": "^0.1.1",
-    "sigma/statistics": "^1.1",
-    "sigma/synchronizations": "1.1.*",
-    "sigma/adyen": "dev-release/1.0",
-    "sigma/faq": "1.0.*"
+    "stevenmaguire/laravel-middleware-csp": "^0.1.1"
   },
   "require-dev": {
     "fzaninotto/faker": "~1.4",
