@@ -7,6 +7,8 @@
     <property name="toolsdir" value="${basedir}/vendor/bin/"/>
     <property name="composer" value="${basedir}/build/composer.phar"/>
     <property name="artisan" value="${basedir}/artisan"/>
+    <property name="php" value="php"/>
+
 
     <target name="build"
             depends="docker,composer,prepare,phpmd-ci,phpcs-ci,phpcpd-ci,clear-db,migrate,seed,npm,webpack"
@@ -195,6 +197,10 @@
         <get src="https://getcomposer.org/composer.phar" dest="${composer}"/>
         <exec executable="ls">
             <arg value="-lah"/>
+            <arg value="${basedir}"/>
+        </exec>
+        <exec executable="ls">
+            <arg value="-lah"/>
             <arg value="${basedir}/build"/>
         </exec>
     </target>
@@ -204,6 +210,7 @@
             <arg value="exec"/>
             <arg value="-T"/>
             <arg value="php-fpm"/>
+            <arg value="${php}"/>
             <arg value="${composer}"/>
             <arg value="self-update"/>
             <arg value="--quiet"/>
@@ -215,6 +222,7 @@
             <arg value="exec"/>
             <arg value="-T"/>
             <arg value="php-fpm"/>
+            <arg value="${php}"/>
             <arg value="${composer}"/>
             <arg value="install"/>
         </exec>
@@ -222,7 +230,7 @@
             <arg value="exec"/>
             <arg value="-T"/>
             <arg value="php-fpm"/>
-            <arg value="php" />
+            <arg value="${php}" />
             <arg value="${artisan}" />
             <arg value="key:generate" />
         </exec>
