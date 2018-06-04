@@ -230,7 +230,7 @@
             <arg value="-T"/>
             <arg value="php-fpm"/>
             <arg value="${php}"/>
-            <arg value="${composer}"/>
+            <arg value="composer.phar"/>
             <arg value="self-update"/>
             <arg value="--quiet"/>
         </exec>
@@ -242,7 +242,7 @@
             <arg value="-T"/>
             <arg value="php-fpm"/>
             <arg value="${php}"/>
-            <arg value="${composer}"/>
+            <arg value="composer.phar"/>
             <arg value="install"/>
         </exec>
         <exec executable="docker-compose">
