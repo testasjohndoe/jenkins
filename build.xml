@@ -197,30 +197,8 @@
 
         <exec executable="wget">
             <arg value="-O" />
-            <arg value="composer-setup.sig" />
-            <arg value="https://composer.github.io/installer.sig" />
-        </exec>
-        <exec executable="wget">
-            <arg value="-O" />
-            <arg value="composer-setup.php" />
-            <arg value="https://getcomposer.org/installer" />
-        </exec>
-        <exec executable="bash">
-            <arg value="-c" />
-            <arg value="awk '{print $$0 &quot;  composer-setup.php&quot;}' composer-setup.sig | sha384sum --check" />
-        </exec>
-        <exec executable="php">
-            <arg value="composer-setup.php" />
-        </exec>
-        <exec executable="rm">
-            <arg value="composer-setup.php" />
-        </exec>
-        <exec executable="rm">
-            <arg value="composer-setup.sig" />
-        </exec>
-        <exec executable="mv">
-            <arg value="composer.phar" />
-            <arg value="composer" />
+            <arg value="${composer}" />
+            <arg value="https://getcomposer.org/composer.phar" />
         </exec>
     </target>
 
@@ -230,7 +208,7 @@
             <arg value="-T"/>
             <arg value="php-fpm"/>
             <arg value="${php}"/>
-            <arg value="composer.phar"/>
+            <arg value="${composer}"/>
             <arg value="self-update"/>
             <arg value="--quiet"/>
         </exec>
@@ -242,7 +220,7 @@
             <arg value="-T"/>
             <arg value="php-fpm"/>
             <arg value="${php}"/>
-            <arg value="composer.phar"/>
+            <arg value="${composer}"/>
             <arg value="install"/>
         </exec>
         <exec executable="docker-compose">
